@@ -1,0 +1,26 @@
+<h2><img class="avatar-small" src="<%= profileAvatar %>"> <%= profileUsername%>  
+    <% if(user && !isVisitorsProfile){
+      if(!isFollowing){ %>
+        <form class="ml-2 d-inline" action="/addFollow/<%= profileUsername%>" method="POST">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+        <button class="btn btn-primary btn-sm">Follow <i class="fas fa-user-plus"></i></button>
+        </form>
+    <% }else{ %>
+        <form class="ml-2 d-inline" action="/removeFollow/<%= profileUsername%>" method="POST">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+        <button class="btn btn-danger btn-sm">UnFollow <i class="fas fa-user-times"></i></button>
+        </form>
+    <% }}else{ %>
+      <% if(currentPage != undefined && currentPage == "posts" || currentPage == "following" || currentPage == "followers"){ %>
+        <h6 style="font-size: small;">you can change your profile pic from changing it from <a href="https://en.gravatar.com/">gravatar</a> by signing up and uploading your photo</h6>
+      <% } %>
+    <% } %>
+    
+  </form>
+</h2>
+
+<div class="profile-nav nav nav-tabs pt-2 mb-4">
+  <a href="/profile/<%= profileUsername %>" class="profile-nav-link nav-item nav-link <%= currentPage == 'posts' ? 'active':''%>">Posts: <%= counts.postCount %></a>
+  <a href="/profile/<%= profileUsername %>/followers" class="profile-nav-link nav-item nav-link <%= currentPage == 'followers' ? 'active':''%>">Followers: <%= counts.followerCount %></a>
+  <a href="/profile/<%= profileUsername %>/following" class="profile-nav-link nav-item nav-link <%= currentPage == 'following' ? 'active':''%>">Following: <%= counts.followingCount %></a>
+</div>

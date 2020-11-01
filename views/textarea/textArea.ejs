@@ -1,0 +1,56 @@
+<div class="form-group">
+    <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+    <label for="post-body" class="text-muted mb-1"><small>Body Content</small></label>
+    <textarea name="body" id="post-body"  type="text" class="body-content tall-textarea form-control"><% if(title =='edit post | Facegram'){%><%= post.body %><%}%>
+</textarea>
+    <script>
+        var simplemde = new SimpleMDE({
+            autofocus: true,
+            element: document.getElementById("post-body"),
+            hideIcons: ["guide", "link"],
+            indentWithTabs: false,
+            insertTexts: {
+                horizontalRule: ["---"],
+                image: ["![paste-your-link-in-the-next-brackets](", ")"],
+                table: ["", "| Column 1 | Column 2 | Column 3 |\n| -------- | -------- | -------- |\n| Text     | Text      | Text     |\n\n"],
+            },
+            lineWrapping: false,
+            parsingConfig: {
+                allowAtxHeaderWithoutSpace: false,
+                strikethrough: false,
+                underscoresBreakWords: true,
+            },
+            placeholder: "Content goes here..",
+            renderingConfig: {
+                singleLineBreaks: false,
+                codeSyntaxHighlighting: true,
+            },
+            shortcuts: {
+                drawTable: "Cmd-Alt-T",
+                drawLink:"Shift-Cmd-Alt-K-J-K",
+                drawTable: "Cmd-Alt-T",
+                togglePreview: "Cmd-Alt-P"
+            },
+            spellChecker: true,
+            status: false,
+            status: ["lines", "words", "cursor"], // Optional usage
+            status: ["lines", "words", "cursor", {
+                className: "keystrokes",
+                defaultValue: function(el) {
+                    this.keystrokes = 0;
+                    el.innerHTML = "0 Keystrokes";
+                },
+                onUpdate: function(el) {
+                    el.innerHTML = ++this.keystrokes + " Keystrokes";
+                }
+            }], // Another optional usage, with a custom status bar item that counts keystrokes
+            styleSelectedText: true,
+            tabSize: 4,
+            toolbar:false,
+            toolbarTips: false,
+        });
+        
+    </script>
+  </div>
+    
