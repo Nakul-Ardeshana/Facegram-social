@@ -2,6 +2,8 @@ const User = require('../models/User')
 const Post = require('../models/Post')
 const Follow = require('../models/Follow')
 const jwt = require('jsonwebtoken')
+const { ObjectID } = require('mongodb')
+const followCollection = require("../db").db().collection("follows")
 
 exports.apiGetPostsByUsername = async function(req,res){
     try{
@@ -90,8 +92,9 @@ exports.logout = (req,res) =>{
 
 exports.register = (req,res) =>{
     let user = new User(req.body)
-    user.register().then(()=>{
-        req.session.user ={username:user.data.username,avatar:user.avatar,_id:user.data._id}
+    user.register().then(async ()=>{
+        await followCollection.insertOne({followedId:new ObjectID("5f894843ddb75f2dd400e690"),authorId:new ObjectID(user.data._id)})
+        req.session.user ={username:user.data.username,avatar:user.avatar,_id:user.data._id,email:user.data.email}
         req.session.save(()=>{res.redirect('/')})
     }).catch((regErrors)=>{
         regErrors.forEach(function(err){
