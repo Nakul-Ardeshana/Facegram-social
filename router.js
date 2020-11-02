@@ -32,5 +32,7 @@ router.post('/search',postController.search)
 router.post('/addFollow/:username',userController.mustBeLoggedIn,followController.addFollow)
 router.post('/removeFollow/:username',userController.mustBeLoggedIn,followController.removeFollow)
 
+//404 related routes
+router.get('*', function(req, res){res.render('404')})
 
 module.exports = router
