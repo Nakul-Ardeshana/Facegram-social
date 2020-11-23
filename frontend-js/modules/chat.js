@@ -32,7 +32,7 @@ export default class Chat {
     <div class="chat-self">
         <div class="chat-message">
           <div class="chat-message-inner">
-            ${this.chatField.value}
+            ${chatMessage}
           </div>
         </div>
         <img class="chat-avatar avatar-tiny" src="${this.avatar}">
