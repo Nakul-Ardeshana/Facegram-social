@@ -28,8 +28,12 @@ export default class Chat {
   sendMessageToServer() {
     this.socket.emit("chatMessageFromBrowser", {
       message: this.chatField.value,
+      time: new Date(),
     });
-    let chatMessage = "<strong>you</strong>: " + this.chatField.value;
+    let time = new Date();
+    let chatMessage = `<p style="color:lightgray"><strong style="color:white">you</strong> ${time.getHours()}:${time.getMinutes()}</p>${
+      this.chatField.value
+    }`;
     this.chatLog.insertAdjacentHTML(
       "beforeend",
       DOMPurify.sanitize(`
@@ -65,19 +69,20 @@ export default class Chat {
       this.avatar = data.avatar;
     });
     this.socket.on("chatMessageFromServer", (data) => {
-      this.displayMessageFromServer(data);
+      let time = new Date()
+      this.displayMessageFromServer(data,time);
     });
   }
 
-  displayMessageFromServer(data) {
+  displayMessageFromServer(data,time) {
+    let chatMessage = `<a href="/profile/${data.username}"><p style="color:darkgray"><strong style="color:black">${data.username}</strong> ${time.getHours()}:${time.getMinutes()}</p></a>${data.message}`;
     this.chatLog.insertAdjacentHTML(
       "beforeend",
       DOMPurify.sanitize(`
     <div class="chat-other">
       <a href="/profile/${data.username}"><img class="avatar-tiny" src="${data.avatar}"></a>
       <div class="chat-message"><div class="chat-message-inner">
-        <a href="/profile/${data.username}"><strong>${data.username}:</strong></a>
-        ${data.message}
+        ${chatMessage}
       </div></div>
     </div>
     `)
