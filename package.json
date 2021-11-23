@@ -39,7 +39,7 @@
     "nodemon": "^2.0.6",
     "sanitize-html": "^1.27.5",
     "simplemde": "^1.11.2",
-    "socket.io": "^2.3.0",
+    "socket.io": "^2.4.0",
     "validator": "^13.1.17",
     "webpack": "^4.44.2",
     "webpack-cli": "^3.3.12",
